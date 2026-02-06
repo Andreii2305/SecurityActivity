@@ -1,13 +1,13 @@
+//Criteria #4, Backend Security Measure
+
 const express = require("express");
 const path = require("path");
 
 const app = express();
 const PORT = 3000;
 
-// Serve your root folder (so index.html + style folder works)
 app.use(express.static(path.join(__dirname, "..")));
 
-// Parse POST form data
 app.use(express.urlencoded({ extended: false }));
 
 // Basic HTML escape to prevent XSS when reflecting input back
@@ -28,16 +28,15 @@ app.post("/submit", (req, res) => {
   // Server-side validation (DON'T trust the browser)
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!username || !email || !feedback) {
-    return res.status(400).send("Error: Please complete all fields.");
+    return res.status(400).send('<h2>Error:</h2> <p>Please complete all fields.</p> <a href="/">Go Back</a>'); //was gonna use different page from pages folder, but don't have enough time to implement
   }
   if (!emailRegex.test(email)) {
-    return res.status(400).send("Error: Invalid email format.");
+    return res.status(400).send('<h2>Error:</h2> <p>Invalid email format.</p> <a href="/">Go Back</a>');
   }
 
   // Sanitize before echoing back (prevents XSS)
   const safeUser = escapeHtml(username);
 
-  // Friendly confirmation page (simple + rubric compliant)q
   res.send(`
     <h2>Thank you!</h2>
     <p>Feedback received from <b>${safeUser}</b>.</p>

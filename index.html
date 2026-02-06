@@ -4,17 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 
+<!-- Criteria #3, Front-End security measures -->
+<script>
+document.getElementById("feedbackForm").addEventListener("submit", function (e) {
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const feedback = document.getElementById("feedback").value.trim();
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!username || !email || !feedback) {
+    e.preventDefault();
+    alert("Please fill out all fields.");
+    return;
+  }
+  if (!emailRegex.test(email)) {
+    e.preventDefault();
+    alert("Please enter a valid email address.");
+    return;
+  }
+});
+</script>
+
 <body>
-    <form id="feedbackForm" action="/submit" method="POST">
-  <input type="text" name="username" id="username" placeholder="Username">
-  <input type="email" name="email" id="email" placeholder="Email">
-  <textarea name="feedback" id="feedback" placeholder="Your feedback"></textarea>
-  <button type="submit">Submit</button>
-</form>
-<p id="msg"></p>
+  <header>
+     <p>CarNap</p>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Cars</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Criteria #2, Input form Implementation -->
+  <form id="feedbackForm" action="/submit" method="POST">
+    <input type="text" name="username" id="username" placeholder="Username">
+    <input type="email" name="email" id="email" placeholder="Email">
+    <textarea name="feedback" id="feedback" placeholder="Your feedback"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <footer class="footer">
+  <p class="copyRight">
+    &copy; <span id="year"></span> CarNap
+  </p>
+
+      <div class="footerLists">
+        <p>About Us</p>
+        <p>Terms and Conditions</p>
+        <p>Policy and Security</p>
+      </div>
+ 
+</footer>
+
+  <p id="msg"></p>
 
 </body>
 </html>
